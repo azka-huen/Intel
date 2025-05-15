@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard Intel</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #notes { margin-top: 20px; }
+    .note { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Dashboard Tim Intel</h1>
+
+  <form id="noteForm">
+    <input type="text" id="title" placeholder="Judul Catatan" required />
+    <br /><br />
+    <textarea id="content" placeholder="Isi Catatan" required></textarea>
+    <br /><br />
+    <button type="submit">Tambah Catatan</button>
+  </form>
+
+  <div id="notes"></div>
+
+  <script>
+    const form = document.getElementById('noteForm');
+    const notesDiv = document.getElementById('notes');
+    let notes = [];
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const title = document.getElementById('title').value;
+      const content = document.getElementById('content').value;
+      const date = new Date().toLocaleString();
+
+      const note = { title, content, date };
+      notes.push(note);
+      renderNotes();
+
+      form.reset();
+    });
+
+    function renderNotes() {
+      notesDiv.innerHTML = '';
+      notes.forEach((note, index) => {
+        const noteEl = document.createElement('div');
+        noteEl.className = 'note';
+        noteEl.innerHTML = `
+          <h3>${note.title}</h3>
+          <p>${note.content}</p>
+          <small>Dibuat: ${note.date}</small>
+        `;
+        notesDiv.appendChild(noteEl);
+      });
+    }
+  </script>
+</body>
+</html>
